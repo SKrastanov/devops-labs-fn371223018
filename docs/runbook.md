@@ -14,7 +14,7 @@ uvicorn app.main:app --reload
 
 ## Check that it works / Проверка, че работи
 
-curl -i http://127.0.0.1:8000/health
+curl -i http://127.0.0.1:9000/health
 
 ## Run the tests / Тестове
 
@@ -28,4 +28,4 @@ ruff check .
 python --version
 which python
 python -m pip check
-curl -i http://127.0.0.1:8000/health
+curl -i http://127.0.0.1:9000/health
