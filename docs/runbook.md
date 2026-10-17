@@ -9,7 +9,7 @@ python3.12 -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements-dev.txt
 
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 ## Check that it works / Проверка, че работи
