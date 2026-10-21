@@ -29,3 +29,10 @@ python --version
 which python
 python -m pip check
 curl -i http://127.0.0.1:8000/health
+
+## Run with Docker
+
+* **Build:** `docker build -t notes-api:0.3.0 .`
+* **Run:** `docker run -d --name notes-app -p 8000:8000 notes-api:0.3.0`
+* **Logs:** `docker logs -f notes-app`
+* **Stop:** `docker stop notes-app`
