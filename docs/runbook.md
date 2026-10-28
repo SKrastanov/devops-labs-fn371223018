@@ -36,3 +36,10 @@ curl -i http://127.0.0.1:8000/health
 * **Run:** `docker run -d --name notes-app -p 8000:8000 notes-api:0.3.0`
 * **Logs:** `docker logs -f notes-app`
 * **Stop:** `docker stop notes-app`
+
+## Run with Compose
+- **Start app**: `docker compose up -d` (starts all services in detached mode)
+- **Check status**: `docker compose ps` (lists container status and health checks)
+- **View logs**: `docker compose logs` (prints container log outputs)
+- **Stop app**: `docker compose down` (stops and removes containers and networks)
+- **Difference between `down` and `down -v`**: `docker compose down` stops containers while keeping stored volume data intact. In contrast, `docker compose down -v` stops containers and permanently deletes all named volumes and stored database data.
