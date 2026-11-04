@@ -22,6 +22,6 @@ def health():
     return {"status": "ok"}
 
 @app.post("/notes")
-async def create_note(note: Note, conn = Depends(get_repository)):
+async def create_note(note: Note, conn: asyncpg.Connection = Depends(get_repository)):
     await conn.execute("INSERT INTO notes (title, body) VALUES ($1, $2)", note.title, note.body)
     return {"status": "success"}
