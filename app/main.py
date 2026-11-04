@@ -1,6 +1,8 @@
 import os
+from typing import Annotated
+
 import asyncpg
-from fastapi import FastAPI, Depends
+from fastapi import Depends, FastAPI
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -10,7 +12,6 @@ class Note(BaseModel):
     body: str
 
 async def get_repository():
-    # Database dependency provider expected by tests
     DATABASE_URL = os.environ.get("DATABASE_URL", os.environ.get("TEST_DATABASE_URL"))
     conn = await asyncpg.connect(DATABASE_URL)
     try:
@@ -23,6 +24,9 @@ def health():
     return {"status": "ok"}
 
 @app.post("/notes")
-async def create_note(note: Note, conn = Depends(get_repository)):
+async def create_note(
+    note: Note,
+    conn: Annotated[asyncpg.Connection, Depends(get_repository)]
+):
     await conn.execute("INSERT INTO notes (title, body) VALUES ($1, $2)", note.title, note.body)
     return {"status": "success"}
