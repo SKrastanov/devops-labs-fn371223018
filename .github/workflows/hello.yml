@@ -1,0 +1,9 @@
+name: Hello
+on: push
+jobs:
+  hello:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "Hello from ${{ github.actor }}"
+      - uses: actions/checkout@v4
+      - run: ls -la
