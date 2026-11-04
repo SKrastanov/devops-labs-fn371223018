@@ -19,7 +19,7 @@ def health():
 
 @app.post("/notes")
 async def create_note(note: Note):
-    # This fresh comment allows a new commit and PR
+    # Guaranteed unique change for a fresh PR
     conn = await asyncpg.connect(os.environ["DATABASE_URL"])
     await conn.execute(
         "INSERT INTO notes (title, body) VALUES ($1, $2)", note.title, note.body
