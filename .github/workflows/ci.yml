@@ -84,17 +84,12 @@ jobs:
 
 
 
+  
   docs:
     runs-on: ubuntu-24.04
     needs: test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     permissions:
       contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -108,10 +103,7 @@ jobs:
         run: mkdocs build --strict
 
       - name: Upload documentation
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
-          path: site
-
-      - name: Deploy documentation
-        id: deployment
-        uses: actions/deploy-pages@v5
+          name: documentation
+          path: site/
