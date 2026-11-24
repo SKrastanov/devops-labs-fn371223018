@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-24.04
+   runs-on: ubuntu-24.04
     services:
       postgres:
         image: postgres:17-alpine
@@ -38,7 +38,7 @@ jobs:
 
   build-docker:
     runs-on: ubuntu-24.04
-    needs: tests
+    needs: test
     permissions:
       contents: read
       packages: write
