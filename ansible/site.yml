@@ -12,3 +12,59 @@
         state: present
         update_cache: true
         cache_valid_time: 3600
+
+- name: Configure PostgreSQL
+  hosts: db
+  become: true
+  vars:
+    db_name: notes
+    db_user: notes
+    db_password: change-me
+
+  tasks:
+    - name: Install PostgreSQL
+      ansible.builtin.apt:
+        name:
+          - postgresql
+          - python3-psycopg2
+        state: present
+
+    - name: Start PostgreSQL
+      ansible.builtin.service:
+        name: postgresql
+        state: started
+        enabled: true
+
+    - name: Listen on all interfaces
+      ansible.builtin.lineinfile:
+        path: /etc/postgresql/17/main/postgresql.conf
+        regexp: '^#?listen_addresses\s*='
+        line: "listen_addresses = '*'"
+      notify: Restart PostgreSQL
+
+    - name: Allow remote database connections
+      ansible.builtin.lineinfile:
+        path: /etc/postgresql/17/main/pg_hba.conf
+        line: "host all all 0.0.0.0/0 scram-sha-256"
+      notify: Restart PostgreSQL
+
+    - name: Create database user
+      community.postgresql.postgresql_user:
+        name: "{{ db_user }}"
+        password: "{{ db_password }}"
+        state: present
+      become_user: postgres
+      no_log: true
+
+    - name: Create application database
+      community.postgresql.postgresql_db:
+        name: "{{ db_name }}"
+        owner: "{{ db_user }}"
+        state: present
+      become_user: postgres
+
+  handlers:
+    - name: Restart PostgreSQL
+      ansible.builtin.service:
+        name: postgresql
+        state: restarted
