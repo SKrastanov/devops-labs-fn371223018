@@ -1,4 +1,3 @@
-U
 # 0002. Database for Lab 4 / База данни за Lab 4
 
 **Status / Статус:** Accepted
@@ -54,3 +53,14 @@ Use SQLite for Lab 4 because it is easy to configure and sufficient for the expe
 - Конфигурирането и локалната разработка остават лесни.
 - If the application later requires more concurrent writes or server-based database features, PostgreSQL can be reconsidered.
 - Ако приложението по-късно изисква повече едновременни операции за запис или функционалности на сървърна база данни, може да се обмисли PostgreSQL.
+
+## Decision update
+
+The original SQLite decision was reconsidered during Lab 4.
+
+PostgreSQL was selected because it supports a separate database
+container, persistent volumes and shared storage across multiple
+application instances.
+
+The subsequent Docker Compose, Ansible and Kubernetes
+implementations use PostgreSQL.
