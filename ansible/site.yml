@@ -68,3 +68,63 @@
       ansible.builtin.service:
         name: postgresql
         state: restarted
+
+- name: Deploy Notes API
+  hosts: web
+  become: true
+  vars:
+    database_url: postgresql://notes:change-me@db:5432/notes
+
+  tasks:
+    - name: Install application dependencies
+      ansible.builtin.apt:
+        name:
+          - python3-venv
+          - python3-packaging
+          - git
+        state: present
+
+    - name: Create application directory
+      ansible.builtin.file:
+        path: /opt/notes
+        state: directory
+        owner: ansible
+        group: ansible
+        mode: '0755'
+
+    - name: Clone application repository
+      ansible.builtin.git:
+        repo: https://github.com/SKrastanov/devops-labs-fn371223018.git
+        dest: /opt/notes
+        version: main
+      become_user: ansible
+      notify: Restart notes
+
+    - name: Install Python requirements
+      ansible.builtin.pip:
+        requirements: /opt/notes/requirements.txt
+        virtualenv: /opt/notes/.venv
+        virtualenv_command: python3 -m venv
+      become_user: ansible
+      notify: Restart notes
+
+    - name: Configure systemd service
+      ansible.builtin.template:
+        src: notes.service.j2
+        dest: /etc/systemd/system/notes.service
+        mode: '0644'
+      notify: Restart notes
+
+    - name: Enable and start Notes API
+      ansible.builtin.systemd:
+        name: notes
+        enabled: true
+        state: started
+        daemon_reload: true
+
+  handlers:
+    - name: Restart notes
+      ansible.builtin.systemd:
+        name: notes
+        state: restarted
+        daemon_reload: true
