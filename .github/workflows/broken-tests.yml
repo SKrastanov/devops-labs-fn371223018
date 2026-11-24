@@ -1,0 +1,26 @@
+
+name: Broken Variant Tests
+
+on:
+  pull_request:
+
+jobs:
+  missing-packages-permission:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Attempt GHCR publishing
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker pull alpine:latest
+          docker tag alpine:latest ghcr.io/skrastanov/devops-labs-fn371223018:broken-permission-test
+          docker push ghcr.io/skrastanov/devops-labs-fn371223018:broken-permission-test
+
+  missing-contents-permission:
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
