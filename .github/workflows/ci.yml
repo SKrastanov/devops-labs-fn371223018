@@ -81,3 +81,37 @@ jobs:
             docker tag "$IMAGE:${{ github.sha }}" "$IMAGE:${{ github.ref_name }}"
             docker push "$IMAGE:${{ github.ref_name }}"
           fi
+
+
+
+  docs:
+    runs-on: ubuntu-24.04
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install documentation dependencies
+        run: pip install -r requirements-docs.txt
+
+      - name: Build documentation
+        run: mkdocs build --strict
+
+      - name: Upload documentation
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+      - name: Deploy documentation
+        id: deployment
+        uses: actions/deploy-pages@v5
