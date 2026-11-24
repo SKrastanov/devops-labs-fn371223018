@@ -1,21 +1,25 @@
 # Service / Услугата
 
-> Fill in every TODO. / Попълнете всяко TODO.
-
 ## Purpose / Предназначение
 
-TODO: two or three sentences: what the service does and for whom. / две-три изречения: какво прави услугата и за кого.
+The Notes API allows users to create and retrieve notes through a REST API. It is used in the DevOps course to demonstrate testing, containerization, continuous integration and deployment.
 
 ## Endpoints / Адреси
 
-| Method | Path | What it does / Какво прави |
+| Method | Path | Description |
 |---|---|---|
 | GET | /health | Checks whether the service is running. |
-| GET | /version | Returns the current version of the service. |
-| GET | /notes | Returns the list of all notes. |
-| POST | /notes |  Creates a new note |
-| GET | /notes/{id} | Returns the note with the specified ID. |
+| GET | /ready | Checks whether the storage is available. |
+| GET | /version | Returns the application version. |
+| GET | /notes | Returns all notes. |
+| POST | /notes | Creates a new note. |
+| GET | /notes/{id} | Returns a note by its ID. |
+| GET | /model | Returns information about the application data model. |
 
 ## Dependencies / Зависимости
 
-The service provides a REST API for managing notes. It allows users to retrieve all notes, create new notes, and retrieve individual notes by their ID. It also provides health and version endpoints to check the service status and current version.
+- Python 3.12
+- FastAPI
+- Uvicorn
+- PostgreSQL when DATABASE_URL is configured
+- In-memory storage when no database is configured

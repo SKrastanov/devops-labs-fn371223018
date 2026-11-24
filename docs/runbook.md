@@ -1,6 +1,5 @@
 # Runbook
 
-> Fill in every TODO with exact commands. / Попълнете всяко TODO с точни команди.
 
 ## Start locally / Локално стартиране
 
