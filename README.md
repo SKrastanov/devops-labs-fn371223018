@@ -139,3 +139,25 @@ ruff check .
 ## Lab 2: teamwork
 
 In Lab 2 the code is not touched. You work in pairs on the documentation in the `docs/` folder. The tasks are in [BACKLOG.en.md](BACKLOG.en.md).
+
+## DevOps lab implementation overview
+
+| Lab | Topic | Implementation |
+|---|---|---|
+| 2 | GitHub teamwork | docs/, CONTRIBUTING.md, CODEOWNERS, issues and Project |
+| 3 | Docker | Dockerfile, .dockerignore |
+| 4 | Docker Compose | compose.yaml, .env.example |
+| 5 | Continuous Integration | .github/workflows/ci.yml, .actrc, tests/ |
+| 6 | Continuous Delivery | GHCR, compose.prod.yaml, GitHub Pages |
+| 7 | Ansible | ansible/, infra/servers/ |
+| 8 | Kubernetes | k8s/app.yaml, k8s/db.yaml |
+
+### Published resources
+
+- Documentation: https://skrastanov.github.io/devops-labs-fn371223018/
+- Releases: https://github.com/SKrastanov/devops-labs-fn371223018/releases
+- Project board: https://github.com/users/SKrastanov/projects/1
+- Container image: ghcr.io/skrastanov/devops-labs-fn371223018:v0.6.0
+
+Each implementation was developed through pull requests.
+Missing historical issue references were added during a retrospective review.
